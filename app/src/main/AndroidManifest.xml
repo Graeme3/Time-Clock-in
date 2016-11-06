@@ -11,13 +11,13 @@
         <activity android:name=".WelcomeScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
+                <uses-permission android:name="android.permission.CAMERA" />
+                <uses-feature android:name="android.hardware.camera" android:required="true" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".BarcodeReader" />
         <activity android:name=".BarcodeGenerator" />
-        <activity android:name=".HelpFiles"></activity>
     </application>
 
 </manifest>
