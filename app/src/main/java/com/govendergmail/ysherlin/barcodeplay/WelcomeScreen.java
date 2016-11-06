@@ -42,14 +42,14 @@ public class WelcomeScreen extends AppCompatActivity
             }
         });
         //Set actions for help files button
-        btnHelpFilesRef.setOnClickListener(new View.OnClickListener()
+       /* btnHelpFilesRef.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View view)
             {
-                Intent Help = new Intent(view.getContext(), HelpFiles.class);
+                Intent Help = new Intent(view.getContext(), );
                 startActivity(Help);
             }
-        });
+        });*/
     }
 }

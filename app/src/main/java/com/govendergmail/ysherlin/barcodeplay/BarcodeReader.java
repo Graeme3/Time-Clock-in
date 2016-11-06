@@ -24,7 +24,8 @@ public class BarcodeReader extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_reader);
         Read();
-        CheckButton();
+        //Attach references
+//        TextToSpeehRef = new TextToSpeech(this, this);
         btncCancel = (Button) findViewById(R.id.btnCancel);
         txtBarcodeFormatRef = (TextView)findViewById(R.id.txtBarcode);
         txtBarcodeTextRef = (TextView)findViewById(R.id.txtEmpFName);
@@ -38,12 +39,6 @@ public class BarcodeReader extends Activity
                 startActivity(Back);
             }
         });
-    }
-
-    private void CheckButton()
-    {
-        //SQL line to check CHECK IN and change button to Checkin/CheckOut
-        
     }
 
 //    @Override
@@ -96,6 +91,12 @@ public class BarcodeReader extends Activity
             String ScanContent = scanResult.getContents();
             //Check the database after barcode has been scanned
             GetEmpData(ScanContent);
+//            String ScanFormat = scanResult.getFormatName();
+//            //Convert Barcode text to speech
+//            Output = ScanContent.toString();
+//            TextToSpeehRef.speak("The Barcode Reads " + Output, TextToSpeech.QUEUE_FLUSH, null);
+            //Write barcode information to text
+
         }
         else
         {
