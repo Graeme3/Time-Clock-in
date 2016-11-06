@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/BarcodePlay.iml" filepath="$PROJECT_DIR$/BarcodePlay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wil.iml" filepath="$PROJECT_DIR$/wil.iml" />
     </modules>
   </component>
 </project>
