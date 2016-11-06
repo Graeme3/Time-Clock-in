@@ -2,7 +2,6 @@ package com.govendergmail.ysherlin.barcodeplay;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.speech.tts.TextToSpeech;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,32 +11,39 @@ import android.widget.Toast;
 public class BarcodeReader extends Activity
 {
     //Create UI variables
-    private Button btnScanBarcodeRef;
+    private Button btncCancel;
     private TextView txtBarcodeFormatRef;
     private TextView txtBarcodeTextRef;
     //Create operating variables
-    private TextToSpeech TextToSpeehRef;
-    private String Output;
+    //private TextToSpeech TextToSpeehRef;
+    //private String Output;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barcode_reader);
-        //Attach references
-//        TextToSpeehRef = new TextToSpeech(this, this);
-        btnScanBarcodeRef = (Button) findViewById(R.id.btnScan);
-        txtBarcodeFormatRef = (TextView)findViewById(R.id.txtBarcodeType);
-        txtBarcodeTextRef = (TextView)findViewById(R.id.txtBarcodeText);
+        Read();
+        CheckButton();
+        btncCancel = (Button) findViewById(R.id.btnCancel);
+        txtBarcodeFormatRef = (TextView)findViewById(R.id.txtBarcode);
+        txtBarcodeTextRef = (TextView)findViewById(R.id.txtEmpFName);
         //Actions for Scan button
-        btnScanBarcodeRef.setOnClickListener(new View.OnClickListener()
+        btncCancel.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
-                Read();
+                Intent Back = new Intent(v.getContext(),WelcomeScreen.class);
+                startActivity(Back);
             }
         });
+    }
+
+    private void CheckButton()
+    {
+        //SQL line to check CHECK IN and change button to Checkin/CheckOut
+        
     }
 
 //    @Override
@@ -88,18 +94,19 @@ public class BarcodeReader extends Activity
         if (scanResult != null)
         {
             String ScanContent = scanResult.getContents();
-            String ScanFormat = scanResult.getFormatName();
-//            //Convert Barcode text to speech
-//            Output = ScanContent.toString();
-//            TextToSpeehRef.speak("The Barcode Reads " + Output, TextToSpeech.QUEUE_FLUSH, null);
-            //Write barcode information to text
-            txtBarcodeTextRef.setText("Format: " + ScanFormat);
-            txtBarcodeFormatRef.setText("Content: " +ScanContent);
+            //Check the database after barcode has been scanned
+            GetEmpData(ScanContent);
         }
         else
         {
             Toast ErrorMessage = Toast.makeText(getApplicationContext(), "No Scan Data Received... ", Toast.LENGTH_LONG);
             ErrorMessage.show();
         }
+    }
+    //Gets and Sets employee data from the database
+    private void GetEmpData(String scanContent)
+    {
+        txtBarcodeFormatRef.setText("Employee Code : " + scanContent);
+//        txtBarcodeTextRef.setText("Format: " + ScanFormat);
     }
 }
