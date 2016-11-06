@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/NoWilToLive.iml" filepath="$PROJECT_DIR$/NoWilToLive.iml" />
+      <module fileurl="file://$PROJECT_DIR$/BarcodePlay.iml" filepath="$PROJECT_DIR$/BarcodePlay.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
