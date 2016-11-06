@@ -109,8 +109,8 @@ public class new_edit_employee extends Activity
             // set crop properties
             cropIntent.putExtra("crop", "true");
             // indicate aspect of desired crop
-            cropIntent.putExtra("aspectX", 2);
-            cropIntent.putExtra("aspectY", 1);
+            cropIntent.putExtra("aspectX", 1);
+            cropIntent.putExtra("aspectY", 1.5);
             // indicate output X and Y
             cropIntent.putExtra("outputX", 256);
             cropIntent.putExtra("outputY", 256);
