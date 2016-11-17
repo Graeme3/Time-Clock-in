@@ -1,53 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_barcode_scanner"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="za.co.salamandra.timeclock.BarcodeScanner">
+    android:fitsSystemWindows="true"
+    tools:context="za.co.salamandra.timeclock.barcode_scanner">
 
-    <TextView
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Listen To Barcode"
-        android:id="@+id/lblTitle"
-        android:textSize="30sp"
-        android:textAllCaps="false"
-        android:textAlignment="center" />
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <TextView
-        android:text="Barcode info will display here"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblTitle"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="38dp"
-        android:id="@+id/txtBarcodeType"
-        android:textSize="18sp"
-        android:textAlignment="center" />
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
 
-    <Button
-        android:text="Scan Barcode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btnScan"
-        android:textSize="18sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+    </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:text="Barcode content will display here"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/txtBarcodeText"
-        android:textSize="18sp"
-        android:layout_marginTop="53dp"
-        android:layout_below="@+id/txtBarcodeType"
-        android:layout_alignParentEnd="true"
-        android:layout_above="@+id/btnScan"
-        android:textAlignment="center" />
-</RelativeLayout>
+    <include layout="@layout/content_barcode_scanner" />
+
+
+
+</android.support.design.widget.CoordinatorLayout>

@@ -1,139 +1,171 @@
 package za.co.salamandra.timeclock;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.util.Log;
-import android.view.View;
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
+import android.view.View;
 
-public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import com.getbase.floatingactionbutton.FloatingActionButton;
+import com.getbase.floatingactionbutton.FloatingActionsMenu;
 
-    SharedPreferences preferences;
-    public static final String MyPREFERENCES = LoginActivity.MyPREFERENCES;
-    private TextView mNameView;
-    private TextView mEmailView;
-    private String apikey = null;
+public class MainActivity extends AppCompatActivity {
+
+    private DrawerLayout mDrawer;
+    private Toolbar toolbar;
+    private NavigationView nvDrawer;
+
+    private ActionBarDrawerToggle drawerToggle;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setSideBar();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //Set a toolbar to replace the actionbar
+        toolbar = (Toolbar) findViewById(R.id.toobar);
         setSupportActionBar(toolbar);
 
+        //find drawer view
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        //setup drawer view
+        setupDrawerContent(nvDrawer);
+
+        drawerToggle = setupDrawerToggle();
+
+        mDrawer.addDrawerListener(drawerToggle);
+
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        fragmentClass = layout.mainPage.class;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception er) {
+            er.printStackTrace();
+        }
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        setTitle("Salamandra Time Clock");
+
+
+
+
+
+        final FloatingActionsMenu menuMultipleActions = (FloatingActionsMenu) findViewById(R.id.multiple_actions);
+
+
+
+        final FloatingActionButton actionA = (FloatingActionButton) findViewById(R.id.action_a);
+        actionA.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+
             }
-        });*/
+        });
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
+        final FloatingActionButton actionB = (FloatingActionButton) findViewById(R.id.action_b);
+        actionB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-    }
+            }
+        });
 
-    public void setSideBar() { //not working as of yet
-        setContentView(za.co.salamandra.timeclock.R.layout.nav_header_main);
-        preferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-        mNameView = (TextView)findViewById(R.id.header_email);
-        mEmailView = (TextView)findViewById(R.id.header_email);
-        apikey = preferences.getString("apikey", null);
-        Log.v("MyActivity", apikey);
-        String strName = preferences.getString("name", null);
-        Log.v("MyActivity", strName);
-        mNameView.setText(strName);
-        String strEmail = preferences.getString("email", null);
-        Log.v("MyActivity", strEmail);
-        mEmailView.setText(strEmail);
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putString("apikey", apikey);
-        editor.apply();
-    }
-
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        //The action bar home/up action should open or close the drawer
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
         }
 
+        if(drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
 
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
+    }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        //Sync the toggle state after onRestoreInstanceState has occured
+        drawerToggle.syncState();
+    }
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-            Intent intent = new Intent(MainActivity.this, BarcodeScanner.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-            Intent intent = new Intent(MainActivity.this, BarcodeGenerator.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_slideshow) {
-            Intent intent = new Intent(MainActivity.this, Employee.class);
-            startActivity(intent);
-        } else if (id == R.id.nav_manage) {
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        //Pass any configuration change to the drawer toggles
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
 
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+    public void selectDrawerItem(MenuItem menuItem) {
+        //Create a new fragment and specify the fragment to show based on nav item
+        Fragment fragment = null;
+        Class fragmentClass = null;
+        switch(menuItem.getItemId()) {
+            case R.id.nav_main_page:
+                fragmentClass = layout.mainPage.class;
+                break;
+            case R.id.nav_scan_code:
+                fragmentClass = layout.scanCode.class;
+                break;
+            case R.id.nav_create_code:
+                fragmentClass = layout.barcodeGenerator.class;
+                break;
+            case R.id.nav_add_employee:
+                fragmentClass = layout.addEmployee.class;
+                break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+
+        //Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        //Set action bar title
+        setTitle(menuItem.getTitle());
+        //Close the navigation drawer
+        mDrawer.closeDrawers();
+
     }
+
+
 }
