@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Time Clock</string>
     <string name="facebook_app_id">627077307500706</string>
+    <string name="fb_login_protocol_scheme">fb627077307500706</string>
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -20,4 +21,5 @@
     <string name="title_activity_barcode_scanner">barcode_scanner</string>
     <string name="main_page_company">Company</string>
     <string name="employee_hint_text">The employee ID will be used to create the barcode ID number and string</string>
+    <string name="first_name_default_text">No user found!</string>
 </resources>
