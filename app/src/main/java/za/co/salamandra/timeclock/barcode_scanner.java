@@ -27,9 +27,9 @@ public class barcode_scanner extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        btnScan = (Button) findViewById(R.id.btnScan);
-        txtBarcodeMain = (TextView) findViewById(R.id.txtBarcodeType);
-        txtBarcodeDescription = (TextView) findViewById(R.id.txtBarcodeText);
+        //btnScan = (Button) findViewById(R.id.);
+        //txtBarcodeMain = (TextView) findViewById(R.id.txtBarcodeType);
+        //txtBarcodeDescription = (TextView) findViewById(R.id.txtBarcodeText);
 
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.initiateScan();
